@@ -33,6 +33,8 @@ node {
     def SERVER_KEY_CREDENTIALS_ID = "8f99c6a7-2d55-4c9a-8f03-bbf33f9da9eb"
     def SF_INSTANCE_URL = "https://login.salesforce.com"
 
+    def toolbelt = tool 'toolbelt'
+
     stage('Checkout Source') {
         echo 'Checking out source files..'
         checkout scm
@@ -52,9 +54,9 @@ node {
             echo "Setting the Audience URL to ${SF_INSTANCE_URL} ..."
             sh "export SFDX_AUDIENCE_URL=${SF_INSTANCE_URL}"
             echo 'Authenticating to SFDX..'
-            sh "sfdx auth:jwt:grant --instanceurl ${SF_INSTANCE_URL} --clientid ${SF_CONSUMER_KEY} --username ${SF_USERNAME} --jwtkeyfile ${server_key_file} --setdefaultdevhubusername --setalias MyOrg"
+            sh "${toolbelt} auth:jwt:grant --instanceurl ${SF_INSTANCE_URL} --clientid ${SF_CONSUMER_KEY} --username ${SF_USERNAME} --jwtkeyfile ${server_key_file} --setdefaultdevhubusername --setalias MyOrg"
             echo "Code Coverage"
-            sh "sfdx force:apex:test:run -s "mySuite" -c -u MyOrg"
+            sh "${toolbelt} force:apex:test:run -s "mySuite" -c -u MyOrg"
         }
     }
   
