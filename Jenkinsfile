@@ -47,8 +47,8 @@ node {
     // Deploy the source manifest to environment
     // -------------------------------------------------------------------------
     stage('Test Coverage') {
-        echo "Using the ${env.SERVER_KEY_CREDENTIALS_ID} credentials.."
-        withCredentials([file(credentialsId: env.SERVER_KEY_CREDENTIALS_ID, variable: 'server_key_file')]) {
+        echo "Using the ${SERVER_KEY_CREDENTIALS_ID} credentials.."
+        withCredentials([file(credentialsId: SERVER_KEY_CREDENTIALS_ID, variable: 'server_key_file')]) {
             echo "Setting the Audience URL to ${SF_INSTANCE_URL} ..."
             sh "export SFDX_AUDIENCE_URL=${SF_INSTANCE_URL}"
             echo 'Authenticating to SFDX..'
