@@ -1,3 +1,5 @@
+import groovy.json.JsonSlurperClassic
+
 //Default color values for slack messages
  
 def red = '#FF0000'
@@ -25,18 +27,13 @@ def green = '#00FF00'
 //   and create a jar with one stage, using one container, and then build the image in the next stage, using another container. All
 //   without having to copy files between containers.
 
-pipeline {
+node {
+ 
+    def SF_USERNAME = "reachshas05@gmail.com"
+    def SF_CONSUMER_KEY = "3MVG9cHH2bfKACZbbERCrK9I9alLz9fkHB5A4TSNX9AIptJC3aZQ5uO_SbDGAoZz.gbmbFeVk4iLDQX5cpoeu"
+    def SERVER_KEY_CREDENTIALS_ID = "67decade-a83a-4049-8c63-dbf807b1a32c"
+    def SF_INSTANCE_URL = "https://login.salesforce.com"
   
-  environment {
-    PIPELINE = "empwr-Salesforce"
-    TIME_STAMP = sh(script: "echo `date +%Y%m%d.%H%M%S`", returnStdout: true).trim()
-    ARTIFACT_BUILD_NUMBER =  "dev-${env.TIME_STAMP}" + "." + "$BUILD_NUMBER"
-    TEST_LEVEL = 'RunLocalTests'
-    SFDX_AUDIENCE_URL = "https://test.salesforce.com/"
-    BRANCH = "$Branch"
-  }
-  stages {
-
     stage('Checkout Source') {
       steps {
         echo 'Checking out source files..'
@@ -53,15 +50,9 @@ pipeline {
     // Deploy the source manifest to environment
     // -------------------------------------------------------------------------
     stage('Test Coverage') {
-      environment {
-        SF_USERNAME = "reachshas05@gmail.com"
-        SF_CONSUMER_KEY = "3MVG9cHH2bfKACZbbERCrK9I9alLz9fkHB5A4TSNX9AIptJC3aZQ5uO_SbDGAoZz.gbmbFeVk4iLDQX5cpoeu"
-        SERVER_KEY_CREDENTIALS_ID = "67decade-a83a-4049-8c63-dbf807b1a32c"
-        SF_INSTANCE_URL = "https://login.salesforce.com"
-      }
       steps {
         echo "Using the ${env.SERVER_KEY_CREDENTIALS_ID} credentials.."
-        withCredentials([file(credentialsId: env.SERVER_KEY_CREDENTIALS_ID, variable: 'server_key_file')]) {
+        withCredentials([file(credentialsId: SERVER_KEY_CREDENTIALS_ID, variable: 'server_key_file')]) {
             echo "Setting the Audience URL to ${SF_INSTANCE_URL} ..."
             sh "export SFDX_AUDIENCE_URL=${SF_INSTANCE_URL}"
             echo 'Authenticating to SFDX..'
@@ -72,5 +63,5 @@ pipeline {
          
       }
     }
-  }
+  
 }
