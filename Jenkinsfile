@@ -1,5 +1,3 @@
-import groovy.json.JsonSlurperClassic
-
 //Default color values for slack messages
 import groovy.json.JsonSlurperClassic
  
@@ -36,10 +34,8 @@ node {
     def SF_INSTANCE_URL = "https://login.salesforce.com"
 
     stage('Checkout Source') {
-      steps {
         echo 'Checking out source files..'
         checkout scm
-      }
     }
 
     // ------------------------------------------------------------------------------
@@ -51,9 +47,8 @@ node {
     // Deploy the source manifest to environment
     // -------------------------------------------------------------------------
     stage('Test Coverage') {
-      steps {
         echo "Using the ${env.SERVER_KEY_CREDENTIALS_ID} credentials.."
-        withCredentials([file(credentialsId: SERVER_KEY_CREDENTIALS_ID, variable: 'server_key_file')]) {
+        withCredentials([file(credentialsId: env.SERVER_KEY_CREDENTIALS_ID, variable: 'server_key_file')]) {
             echo "Setting the Audience URL to ${SF_INSTANCE_URL} ..."
             sh "export SFDX_AUDIENCE_URL=${SF_INSTANCE_URL}"
             echo 'Authenticating to SFDX..'
@@ -61,8 +56,6 @@ node {
             echo "Code Coverage"
             sh "sfdx force:apex:test:run -s "mySuite" -c -u MyOrg"
         }
-         
-      }
     }
   
 }
