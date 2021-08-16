@@ -1,6 +1,7 @@
 import groovy.json.JsonSlurperClassic
 
 //Default color values for slack messages
+import groovy.json.JsonSlurperClassic
  
 def red = '#FF0000'
 def yellow = '#FFFF00'
@@ -28,12 +29,12 @@ def green = '#00FF00'
 //   without having to copy files between containers.
 
 node {
- 
+  
     def SF_USERNAME = "reachshas05@gmail.com"
     def SF_CONSUMER_KEY = "3MVG9cHH2bfKACZbbERCrK9I9alLz9fkHB5A4TSNX9AIptJC3aZQ5uO_SbDGAoZz.gbmbFeVk4iLDQX5cpoeu"
     def SERVER_KEY_CREDENTIALS_ID = "67decade-a83a-4049-8c63-dbf807b1a32c"
     def SF_INSTANCE_URL = "https://login.salesforce.com"
-  
+
     stage('Checkout Source') {
       steps {
         echo 'Checking out source files..'
