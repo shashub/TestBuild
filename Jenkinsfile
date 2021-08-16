@@ -30,7 +30,7 @@ node {
   
     def SF_USERNAME = "reachshas05@gmail.com"
     def SF_CONSUMER_KEY = "3MVG9cHH2bfKACZbbERCrK9I9alLz9fkHB5A4TSNX9AIptJC3aZQ5uO_SbDGAoZz.gbmbFeVk4iLDQX5cpoeu"
-    def SERVER_KEY_CREDENTIALS_ID = "67decade-a83a-4049-8c63-dbf807b1a32c"
+    def SERVER_KEY_CREDENTIALS_ID = "8f99c6a7-2d55-4c9a-8f03-bbf33f9da9eb"
     def SF_INSTANCE_URL = "https://login.salesforce.com"
 
     stage('Checkout Source') {
